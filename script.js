@@ -337,7 +337,7 @@ function drawScore() {
   ctx.fillText('Score: ' + score, canvas.width - 10, 20);
 }
 
-// Конец игры
+// The end of the game
 function gameOver() {
   playSound(gameOverSound);
   isGameOver = true;
@@ -369,13 +369,13 @@ function restartGame() {
 function gameLoop() {
   if (isGameOver) return;
 
-  // Очистка экрана
+  // Clearing the screen
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Update and render the starry background
   updateStars();
 
-  // Обновление состояния и отрисовка корабля игрока
+  // Updating the status and visualizing the status of a graceful
   drawSpaceship();
   moveSpaceship();
 
