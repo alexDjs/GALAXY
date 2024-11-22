@@ -1,0 +1,15 @@
+{
+  "name": "galaxy",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000G\u0000A\u0000L\u0000A\u0000X\u0000Y\u0000\r\u0000 \u0000",
+  "main": "script.js",
+  "scripts": {
+    "start": "http-server . && start http://127.0.0.1:8080/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Olecsandr Shchehlov",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
