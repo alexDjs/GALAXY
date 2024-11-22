@@ -1,0 +1,30 @@
+This game is a classic arcade shooter where the player controls a spaceship, fighting enemies and trying to survive as long as possible. Here are the main elements of the game:
+
+1. **Gameplay:**
+   - The player controls a spaceship that moves left and right, avoiding collisions with enemies.
+   - The spaceship can shoot bullets to destroy enemies.
+   - There are different types of enemies, including basic ones and more complex ones, such as shooter enemies and zigzag-moving enemies.
+   - When the player reaches a certain score (e.g., 50 points), a boss appears—a powerful enemy with its own health, which requires special attention to defeat.
+
+2. **Graphics:**
+   - The game features 2D graphics where the player controls the spaceship and interacts with enemies and bullets on the screen.
+   - Stars move in the background, creating the atmosphere of outer space.
+   - All elements, such as the spaceship, bullets, enemies, and the boss, are depicted using sprites.
+
+3. **Sound Effects:**
+   - The game uses various sound effects for shooting, explosions, boss music, and background music.
+   - When enemies or the boss are destroyed, an explosion sound plays, along with special music when the boss appears or the game is over.
+
+4. **Gameplay Features:**
+   - The game has dynamically increasing difficulty: enemies get faster, and stronger opponents appear as the player's score increases.
+   - The boss appears when the player reaches 50 points, and defeating it gives the player extra points and completes the current level with a victory.
+
+5. **Controls:**
+   - Arrow keys are used for moving left and right, while the spacebar is used for shooting.
+   - When the game ends (if the spaceship is destroyed), the player can press Enter to restart the game.
+
+6. **Objective:**
+   - The main goal of the game is to score as many points as possible by destroying enemies and avoiding collisions with them.
+   - The player must survive as long as possible and defeat the boss to finish the game with a victory.
+
+This game is a typical arcade shooter with a space theme, offering players dynamic gameplay and increasing difficulty.
