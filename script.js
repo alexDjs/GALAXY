@@ -1,11 +1,11 @@
-// Получаем доступ к canvas и контексту
+// Access canvas and context
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = 320;
 canvas.height = 480;
 
-// Загрузка изображений
+// Loading images
 const spaceshipImg = new Image();
 spaceshipImg.src = 'images/me.png';
 const enemyImg = new Image();
@@ -19,7 +19,7 @@ zigzagEnemyImg.src = 'images/zigzag_enemy.png';
 const bossImg = new Image();
 bossImg.src = 'images/boss.png';
 
-// Звуковые эффекты
+// Sound effects
 const shootSound = new Audio('sounds/shoot.mp3');
 const explosionSound = new Audio('sounds/explosion.mp3');
 const gameOverSound = new Audio('sounds/gameover.mp3');
@@ -34,27 +34,27 @@ backgroundMusic.loop = true;
 backgroundMusic.volume = 0.3;
 backgroundMusic.play();
 
-// Звёздный фон
+// Star background
 let stars = [];
 
-// Инициализация звёзд
+// Initialize stars
 function initializeStars() {
   for (let i = 0; i < 100; i++) {
     stars.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 2 + 1, // Размер звезды
-      speed: Math.random() * 1 + 0.5, // Скорость движения звезды
+      size: Math.random() * 2 + 1, // Star size
+      speed: Math.random() * 1 + 0.5, // Star movement speed
     });
   }
 }
 
-// Обновление и отрисовка звёзд
+//Updating and drawing stars
 function updateStars() {
   stars.forEach((star) => {
-    star.y += star.speed; // Движение звезды вниз
+    star.y += star.speed; // Star movement down
 
-    // Перемещение звезды наверх, если она выходит за пределы экрана
+    // Move the star up if it goes off screen
     if (star.y > canvas.height) {
       star.y = 0;
       star.x = Math.random() * canvas.width;
@@ -62,7 +62,7 @@ function updateStars() {
       star.speed = Math.random() * 1 + 0.5;
     }
 
-    // Рисуем звезду
+    // Drawing a star
     ctx.fillStyle = 'white';
     ctx.beginPath();
     ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
@@ -70,10 +70,10 @@ function updateStars() {
   });
 }
 
-// Вызываем функцию инициализации звёзд
+// Calling the star initialization function
 initializeStars();
 
-// Определяем корабль игрока
+// Determining the player's ship
 let spaceship = {
   x: canvas.width / 2 - 15,
   y: canvas.height - 50,
@@ -82,12 +82,12 @@ let spaceship = {
   dx: 5,
 };
 
-// Пули, враги и очки
+// Bullets, enemies and glasses
 let bullets = [];
 let enemies = [];
 let score = 0;
 
-// Инициализация скорости врагов и частоты их появления
+// Initializing enemy speed and spawn frequency
 let enemySpeed = 0.05;
 let spawnRate = 0.001;
 const speedIncrement = 0.0005;
@@ -101,7 +101,7 @@ let leftPressed = false;
 let rightPressed = false;
 let spacePressed = false;
 
-// Обработчики событий
+//Event Handlers
 document.addEventListener('keydown', (e) => {
   if (e.code === 'ArrowLeft') leftPressed = true;
   if (e.code === 'ArrowRight') rightPressed = true;
@@ -120,24 +120,24 @@ function playSound(sound) {
   sound.play();
 }
 
-// Рисование корабля
+// Drawing a ship
 function drawSpaceship() {
   ctx.drawImage(spaceshipImg, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
 }
 
-// Движение корабля
+// Ship movement
 function moveSpaceship() {
   if (leftPressed && spaceship.x > 0) spaceship.x -= spaceship.dx;
   if (rightPressed && spaceship.x < canvas.width - spaceship.width) spaceship.x += spaceship.dx;
 }
 
-// Стрельба
+// Shooting
 function shoot() {
   bullets.push({ x: spaceship.x + spaceship.width / 2 - 2, y: spaceship.y });
   playSound(shootSound);
 }
 
-// Обновление пуль
+// Bullet update
 function updateBullets() {
   bullets = bullets.filter((bullet) => bullet.y > 0);
   bullets.forEach((bullet) => {
@@ -146,7 +146,7 @@ function updateBullets() {
   });
 }
 
-// Появление врагов
+// Enemies Appear
 function spawnEnemies() {
   if (Math.random() < spawnRate) {
     const x = Math.floor(Math.random() * (canvas.width - 20));
@@ -154,7 +154,7 @@ function spawnEnemies() {
   }
 }
 
-// Появление специальных врагов
+// Special Enemies Appear
 function spawnSpecialEnemies() {
   if (score >= 25 && enemies.every((e) => e.type !== 'shooter')) {
     enemies.push({
@@ -183,10 +183,10 @@ function spawnSpecialEnemies() {
   }
 }
 
-// Спавн босса
+// Boss Spawn
 function spawnBoss() {
-  // Босс появляется только если счет равен 50 и его здоровье больше 0
-  if (isBossActive || score !== 100|| (boss && boss.health <= 0)) return;
+  // The boss only appears if the score is 50 and his health is greater than 0
+  if (isBossActive || score !== 50|| (boss && boss.health <= 0)) return;
 
   isBossActive = true;
   boss = {
@@ -195,7 +195,7 @@ function spawnBoss() {
     width: 100,
     height: 100,
     speed: 2,
-    health: 20,  // Устанавливаем здоровье босса
+    health: 35,  // Setting the boss's health
     direction: 1,
   };
 
@@ -206,7 +206,7 @@ function spawnBoss() {
 }
 
 
-// Обновление врагов
+// Enemy Update
 function updateEnemies() {
   enemySpeed = Math.min(enemySpeed + speedIncrement, 0.5);
   spawnRate = Math.min(spawnRate + spawnRateIncrement, 0.03);
@@ -244,35 +244,35 @@ function updateEnemies() {
   spawnSpecialEnemies();
 }
 
-// Обновление босса
+// Boss Update
 function updateBoss() {
   if (!boss || boss.health <= 0) {
-    // Босс уничтожен, обновляем состояние
+    // The boss is destroyed, update the status
     isBossActive = false;
-    boss = null;  // Удаляем босса
-    bossMusic.pause();  // Останавливаем музыку
+    boss = null;  // Removing the boss
+    bossMusic.pause();  // Stop the music
     victoryMusic.currentTime = 0;
-    victoryMusic.play();  // Включаем музыку победы
-    return;  // Выходим из функции
+    victoryMusic.play();  // Let's turn on the music of victory
+    return;  // Exiting the function
   }
 
-  // Двигаем босса
+  // Moving the boss
   boss.x += boss.speed * boss.direction;
 
-  // Отражаем босса от стен
+  // Reflecting the boss from the walls
   if (boss.x <= 0 || boss.x >= canvas.width - boss.width) {
     boss.direction *= -1;
   }
 
-  // Отображаем босса
+  // Displaying the boss
   ctx.drawImage(bossImg, boss.x, boss.y, boss.width, boss.height);
 }
 
 
-// Проверка столкновений с боссом
+// Checking boss encounters
 function checkCollisions() {
   bullets.forEach((bullet, bulletIndex) => {
-    // Проверка столкновений с обычными врагами
+    // Checking encounters with regular enemies
     enemies.forEach((enemy, enemyIndex) => {
       if (
         bullet.x < enemy.x + 20 &&
@@ -287,7 +287,7 @@ function checkCollisions() {
       }
     });
 
-    // Проверка столкновения пули с боссом
+    // Checking the impact of a bullet with a boss
     if (
       isBossActive &&
       boss &&
@@ -297,39 +297,39 @@ function checkCollisions() {
       bullet.y + 10 > boss.y
     ) {
       bullets.splice(bulletIndex, 1);
-      boss.health -= 1; // Уменьшаем здоровье босса на 1
+      boss.health -= 1; // Reduce the boss's health by 1
 
-      // Если здоровье босса <= 0, уничтожаем его
+      // If the boss' health is <= 0, destroy him
       if (boss.health <= 0) {
-        score += 5;  // Дополнительные очки за уничтожение босса
-        isBossActive = false; // Босс больше не активен
-        boss = null; // Удаляем босса
-        bossMusic.pause();  // Останавливаем музыку
+        score += 5;  // Extra points for defeating a boss
+        isBossActive = false; // Boss is no longer active
+        boss = null; // Removing the boss
+        bossMusic.pause();  // Stop the music
         victoryMusic.currentTime = 0;
-        victoryMusic.play();  // Включаем музыку победы
-        playSound(explosionSound);  // Звук взрыва
+        victoryMusic.play();  // Let's turn on the music of victory
+        playSound(explosionSound);  // Explosion sound
       }
     }
   });
 }
 
 
-// Логика игрового состояния
+// Game State Logic
 function updateGameState() {
-  // Босс появляется только если счет равен 50 и его здоровье больше 0
+ // The boss appears only if the score is 50 and his health is greater than 0
   if (score === 50 && !isBossActive && (!boss || boss.health > 0)) {
     console.log("Attempting to spawn boss");
-    spawnBoss(); // Спавн босса, если его нет и счет равен 50
+    spawnBoss(); //Boss spawn if there is no boss and the score is 50
   }
 
-  // Если босс активен, обновляем его
+  // If the boss is active, update it
   if (isBossActive) {
     updateBoss();
   }
 }
 
 
-// Отрисовка очков
+// Drawing glasses
 function drawScore() {
   ctx.font = '15px Arial';
   ctx.fillStyle = 'white';
@@ -349,7 +349,7 @@ function gameOver() {
   ctx.fillText('Press Enter to Restart', canvas.width / 2, canvas.height / 2 + 40);
 }
 
-// Перезапуск игры
+// Restarting the game
 function restartGame() {
   score = 0;
   enemies = [];
@@ -365,38 +365,38 @@ function restartGame() {
   gameLoop();
 }
 
-// Основной игровой цикл
+// Main game loop
 function gameLoop() {
   if (isGameOver) return;
 
   // Очистка экрана
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Обновление и отрисовка звёздного фона
+  // Update and render the starry background
   updateStars();
 
   // Обновление состояния и отрисовка корабля игрока
   drawSpaceship();
   moveSpaceship();
 
-  // Обработка стрельбы
+  // Shooting processing
   if (spacePressed) {
     shoot();
     spacePressed = false;
   }
 
-  // Обновление остальных игровых объектов
+  // Updating other game objects
   updateBullets();
   updateEnemies();
   checkCollisions();
   updateGameState();
 
-  // Отрисовка интерфейса (например, очков)
+  // Rendering the interface (for example, glasses)
   drawScore();
 
-  // Запуск следующего кадра
+  // Start next frame
   requestAnimationFrame(gameLoop);
 }
 
-// Запуск игры
+// Starting the game
 gameLoop();
