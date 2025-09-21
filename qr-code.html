@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Game - QR Code</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .qr-code {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+        .url {
+            font-size: 14px;
+            word-break: break-all;
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .instructions {
+            background: #222;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        h1 {
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GALAXY GAME</h1>
+        
+        <div class="instructions">
+            <h3>📱 Как подключиться с мобильного:</h3>
+            <p>1. Отсканируйте QR-код ниже камерой телефона</p>
+            <p>2. Или введите адрес вручную в браузер телефона</p>
+            <p>3. Убедитесь, что телефон подключен к той же Wi-Fi сети</p>
+        </div>
+
+        <div class="qr-code">
+            <div id="qrcode"></div>
+        </div>
+        
+        <div class="url">
+            <strong>URL:</strong><br>
+            http://192.168.100.45:5500/file.html
+        </div>
+
+        <div class="instructions">
+            <h3>🎮 Управление на мобильном:</h3>
+            <p>• Левая сторона экрана - движение влево</p>
+            <p>• Правая сторона экрана - движение вправо</p>
+            <p>• Центр экрана - стрельба</p>
+            <p>• Тап для старта/рестарта игры</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <script>
+        // Генерируем QR-код
+        QRCode.toCanvas(document.getElementById('qrcode'), 'http://192.168.100.45:5500/file.html', {
+            width: 256,
+            height: 256,
+            colorDark: '#000000',
+            colorLight: '#ffffff'
+        }, function (error) {
+            if (error) console.error(error);
+            console.log('QR code generated successfully!');
+        });
+    </script>
+</body>
+</html>

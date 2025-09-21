@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Galaxy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="images/pixil.ico" type="image/x-icon">
+</head>
+<body>
+  <div id="Galaxsy">
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- Pause button in top left corner -->
+    <div class="top-controls">
+      <button id="pauseBtn" class="control-btn pause-btn">⏸️</button>
+      <button id="settingsBtn" class="control-btn settings-btn">⚙️</button>
+    </div>
+    
+    <!-- Pause menu -->
+    <div class="pause-menu" id="pauseMenu">
+      <h2>Game Paused</h2>
+      <button id="resumeBtn" class="menu-btn">Resume Game</button>
+      <button id="pauseSettingsBtn" class="menu-btn">Settings</button>
+      <button id="restartBtn" class="menu-btn">Restart Game</button>
+    </div>
+    
+    <!-- Settings menu -->
+    <div class="settings-menu" id="settingsMenu">
+      <h2>Settings</h2>
+      <div class="setting-item">
+        <label for="volumeSlider">Volume:</label>
+        <input type="range" id="volumeSlider" min="0" max="100" value="50">
+        <span id="volumeValue">50%</span>
+      </div>
+      <div class="setting-item">
+        <label for="difficultySelect">Difficulty:</label>
+        <select id="difficultySelect">
+          <option value="easy">Easy</option>
+          <option value="normal" selected>Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="musicToggle" checked> Background Music
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="soundToggle" checked> Sound Effects
+        </label>
+      </div>
+      <button id="settingsBackBtn" class="menu-btn">Back</button>
+    </div>
+    
+    <div class="touch-controls" id="touchControls">
+      Use buttons below to play
+    </div>
+    
+    <!-- Mobile control buttons -->
+    <div class="mobile-controls" id="mobileControls">
+      <div class="control-row">
+        <div class="move-controls">
+          <button id="leftBtn" class="control-btn move-btn">←</button>
+          <button id="rightBtn" class="control-btn move-btn">→</button>
+        </div>
+        <button id="shootBtn" class="control-btn shoot-btn">🔥</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
