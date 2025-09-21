@@ -59,17 +59,68 @@ zigzagEnemyImg.src = 'images/zigzag_enemy.png';
 const bossImg = new Image();
 bossImg.src = 'images/boss.png';
 
-// Sound effects
+// Sound effects with preloading
 const shootSound = new Audio('sounds/shoot.mp3'); 
 const explosionSound = new Audio('sounds/explosion.mp3');
-const gameOverSound = new Audio('sounds/gameover.mp3');
+const gameOverSound = new Audio('sounds/gameOver.mp3');
 const bossMusic = new Audio('sounds/boss.mp3');
 const victoryMusic = new Audio('sounds/victory.mp3');
 const backgroundMusic = new Audio('sounds/background.mp3');
 
+// Audio loading status
+let audioLoaded = 0;
+let totalAudio = 6;
+let audioLoadingComplete = false;
+
+// Preload audio files
+function preloadAudio() {
+  const audioFiles = [shootSound, explosionSound, gameOverSound, bossMusic, victoryMusic, backgroundMusic];
+  
+  audioFiles.forEach((audio, index) => {
+    audio.preload = 'auto';
+    audio.addEventListener('canplaythrough', () => {
+      audioLoaded++;
+      updateLoadingStatus();
+    });
+    audio.addEventListener('error', () => {
+      console.log(`Audio ${index} failed to load, continuing...`);
+      audioLoaded++;
+      updateLoadingStatus();
+    });
+    audio.load(); // Force loading
+  });
+}
+
+function updateLoadingStatus() {
+  if (audioLoaded >= totalAudio) {
+    audioLoadingComplete = true;
+    document.getElementById('loadingText').style.display = 'none';
+  } else {
+    const progress = Math.round((audioLoaded / totalAudio) * 100);
+    document.getElementById('loadingText').innerHTML = `Loading audio... ${progress}%`;
+  }
+}
+
 // Boss specific sounds (using existing files with different settings)
 const bossShootSound = new Audio('sounds/shoot.mp3');
 const bossExplosionSound = new Audio('sounds/explosion.mp3');
+
+// Safe audio playback function
+function playAudioSafe(audio) {
+  if (audio && audioLoadingComplete) {
+    try {
+      audio.currentTime = 0; // Reset to start
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log('Audio play failed:', error);
+        });
+      }
+    } catch (error) {
+      console.log('Audio error:', error);
+    }
+  }
+}
 
 explosionSound.volume = 0.3;
 shootSound.volume = 0.2;
@@ -336,6 +387,7 @@ function initializeMobileControls() {
 // Initialize mobile controls when page loads
 if (isMobile) {
   document.addEventListener('DOMContentLoaded', () => {
+    preloadAudio(); // Start audio loading
     initializeMobileControls();
     initializePauseAndSettings();
     updateAudioVolume();
@@ -346,6 +398,7 @@ if (isMobile) {
     // Still loading
   } else {
     // Already loaded
+    preloadAudio(); // Start audio loading
     initializeMobileControls();
     initializePauseAndSettings();
     updateAudioVolume();
@@ -354,6 +407,7 @@ if (isMobile) {
 } else {
   // For desktop, still initialize pause and settings
   document.addEventListener('DOMContentLoaded', () => {
+    preloadAudio(); // Start audio loading
     initializePauseAndSettings();
     updateAudioVolume();
     applyDifficultySettings();
@@ -380,7 +434,7 @@ canvas.addEventListener('click', (e) => {
 // --- Sound Function ---
 function playSound(sound) {
   sound.currentTime = 0;
-  sound.play().catch(e => console.error("Error playing sound:", e)); // Add error handling
+  playAudioSafe(sound);
 }
 
 // --- Drawing Functions ---
@@ -972,7 +1026,7 @@ function restartGame() {
 
   // Start background music
   backgroundMusic.currentTime = 0;
-  backgroundMusic.play();
+  playAudioSafe(backgroundMusic);
 
   // Start game loop again
   gameLoop();
