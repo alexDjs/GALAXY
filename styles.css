@@ -18,6 +18,32 @@ body {
   height: 100%;
 }
 
+/* Loading indicator */
+.loading-indicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10000;
+  background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(25,25,60,0.9));
+  padding: 20px 30px;
+  border-radius: 15px;
+  border: 2px solid #4a90e2;
+  box-shadow: 0 0 30px rgba(74, 144, 226, 0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 30px rgba(74, 144, 226, 0.5); }
+  50% { box-shadow: 0 0 50px rgba(74, 144, 226, 0.8); }
+  100% { box-shadow: 0 0 30px rgba(74, 144, 226, 0.5); }
+}
+
 #Galaxsy {
   position: relative;
   display: flex;

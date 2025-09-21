@@ -74,12 +74,16 @@ let audioLoadingComplete = false;
 
 // Preload audio files
 function preloadAudio() {
+  console.log('🎵 Starting audio preload...');
+  updateLoadingStatus(); // Show loading indicator immediately
+  
   const audioFiles = [shootSound, explosionSound, gameOverSound, bossMusic, victoryMusic, backgroundMusic];
   
   audioFiles.forEach((audio, index) => {
     audio.preload = 'auto';
     audio.addEventListener('canplaythrough', () => {
       audioLoaded++;
+      console.log(`Audio ${index} loaded successfully`);
       updateLoadingStatus();
     });
     audio.addEventListener('error', () => {
@@ -92,12 +96,18 @@ function preloadAudio() {
 }
 
 function updateLoadingStatus() {
+  const loadingElement = document.getElementById('loadingText');
+  if (!loadingElement) return;
+  
   if (audioLoaded >= totalAudio) {
     audioLoadingComplete = true;
-    document.getElementById('loadingText').style.display = 'none';
+    loadingElement.style.display = 'none';
+    console.log('🎵 All audio files loaded successfully!');
   } else {
     const progress = Math.round((audioLoaded / totalAudio) * 100);
-    document.getElementById('loadingText').innerHTML = `Loading audio... ${progress}%`;
+    loadingElement.innerHTML = `🎵 Loading audio... ${progress}%<br><small>Please wait...</small>`;
+    loadingElement.style.display = 'block';
+    console.log(`Audio loading progress: ${progress}% (${audioLoaded}/${totalAudio})`);
   }
 }
 
